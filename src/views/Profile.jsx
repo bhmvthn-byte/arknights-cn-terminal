@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { SFX, STATS } from '../data.js';
+import { STATS } from '../data.js';
 import { Icon, LogoMark } from '../icons.jsx';
 
-export default function Profile({ user, muted, onToggleMute, onLogout, onPlaySfx, showToast }) {
+export default function Profile({ user, onLogout, showToast }) {
   const [confirming, setConfirming] = useState(false);
 
   function clearData() {
@@ -17,7 +17,7 @@ export default function Profile({ user, muted, onToggleMute, onLogout, onPlaySfx
         <div>
           <span className="page-kicker">PROFILE / CN</span>
           <h1>我的档案</h1>
-          <p>账号状态、数据来源与音效版权信息。</p>
+          <p>账号状态与数据来源说明。</p>
         </div>
         <div className="head-side">
           <span>ACCOUNT</span>
@@ -79,42 +79,7 @@ export default function Profile({ user, muted, onToggleMute, onLogout, onPlaySfx
           </div>
         </section>
 
-        <section className="profile-card sound-card">
-          <div className="panel-head">
-            <span>LOGIN SOUND</span>
-            <em>CC0</em>
-          </div>
-          <div className="sound-main">
-            <span className={`sound-orb ${muted ? 'off' : ''}`}>
-              <Icon name={muted ? 'mute' : 'volume'} size={22} />
-            </span>
-            <div>
-              <strong>{SFX.title}</strong>
-              <em>{SFX.author} · Freesound</em>
-              <span>{SFX.license}</span>
-            </div>
-          </div>
-          <div className="sound-actions">
-            <button type="button" className="btn-primary sm" onClick={onPlaySfx} disabled={muted}>
-              <Icon name="play" size={15} />
-              试听
-            </button>
-            <button type="button" className="btn-ghost sm" onClick={onToggleMute}>
-              <Icon name={muted ? 'mute' : 'volume'} size={15} />
-              {muted ? '已静音' : '静音'}
-            </button>
-          </div>
-          <p className="profile-copy">
-            登录时播放的启动音效。原曲为 CC0 公共领域素材，可商用、无需署名；本项目保留出处信息。
-          </p>
-          <div className="link-list">
-            <a href={SFX.source} target="_blank" rel="noreferrer">
-              Freesound 原始页面 <Icon name="arrow" size={13} />
-            </a>
-          </div>
-        </section>
-
-        <section className="profile-card">
+        <section className="profile-card real-account">
           <div className="panel-head">
             <span>REAL ACCOUNT</span>
             <em>NOT INCLUDED</em>

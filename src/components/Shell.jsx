@@ -6,7 +6,7 @@ const NAV = [
   { id: 'profile', label: '我的档案', sub: 'PROFILE', icon: 'user' },
 ];
 
-export default function Shell({ user, route, navigate, muted, onToggleMute, children, onHome }) {
+export default function Shell({ user, route, navigate, children, onHome }) {
   return (
     <div className="app-shell">
       <header className="topbar">
@@ -41,9 +41,6 @@ export default function Shell({ user, route, navigate, muted, onToggleMute, chil
             <i />
             CN 国服
           </span>
-          <button type="button" className="icon-btn" onClick={onToggleMute} title={muted ? '取消静音' : '静音'} aria-label={muted ? '取消静音' : '静音'}>
-            <Icon name={muted ? 'mute' : 'volume'} size={18} />
-          </button>
           <button type="button" className="user-chip" onClick={() => navigate('profile')}>
             <span className="avatar">博</span>
             <span className="user-meta">

@@ -6,10 +6,9 @@ import Home from './views/Home.jsx';
 import Events from './views/Events.jsx';
 import Profile from './views/Profile.jsx';
 import StageDrawer from './components/StageDrawer.jsx';
-import { EVENTS, SFX } from './data.js';
+import { EVENTS } from './data.js';
 
 const USER_KEY = 'ak_cn_user';
-const MUTE_KEY = 'ak_cn_muted';
 
 function readUser() {
   try {
@@ -28,11 +27,9 @@ function parseRoute() {
 export default function App() {
   const [user, setUser] = useState(readUser);
   const [booting, setBooting] = useState(false);
-  const [muted, setMuted] = useState(() => localStorage.getItem(MUTE_KEY) === '1');
   const [route, setRoute] = useState(parseRoute);
   const [selected, setSelected] = useState(null);
   const [toast, setToast] = useState('');
-  const audioRef = useRef(null);
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -55,37 +52,23 @@ export default function App() {
     window.location.hash = `#/${path}`;
   }, []);
 
-  const playSfx = useCallback(() => {
-    if (muted) return;
-    if (!audioRef.current) {
-      audioRef.current = new Audio(SFX.file);
-      audioRef.current.volume = 0.55;
-    }
-    audioRef.current.currentTime = 0;
-    audioRef.current.play().catch(() => {});
-  }, [muted]);
-
-  const handleLogin = useCallback(
-    (account) => {
-      const profile = {
-        name: '博士',
-        uid: `10${Math.floor(100000 + Math.random() * 899999)}`,
-        server: 'CN 国服',
-        level: 120,
-        account,
-        joinedAt: new Date().toISOString(),
-      };
-      localStorage.setItem(USER_KEY, JSON.stringify(profile));
-      setUser(profile);
-      window.location.hash = '#/home';
-      setRoute({ view: 'home', id: '' });
-      setBooting(true);
-      playSfx();
-      clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => setBooting(false), 3800);
-    },
-    [playSfx]
-  );
+  const handleLogin = useCallback((account) => {
+    const profile = {
+      name: '博士',
+      uid: `10${Math.floor(100000 + Math.random() * 899999)}`,
+      server: 'CN 国服',
+      level: 120,
+      account,
+      joinedAt: new Date().toISOString(),
+    };
+    localStorage.setItem(USER_KEY, JSON.stringify(profile));
+    setUser(profile);
+    window.location.hash = '#/home';
+    setRoute({ view: 'home', id: '' });
+    setBooting(true);
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setBooting(false), 3800);
+  }, []);
 
   const handleLogout = useCallback(() => {
     localStorage.removeItem(USER_KEY);
@@ -93,15 +76,6 @@ export default function App() {
     setBooting(false);
     setSelected(null);
     window.location.hash = '#/home';
-  }, []);
-
-  const toggleMute = useCallback(() => {
-    setMuted((prev) => {
-      const next = !prev;
-      localStorage.setItem(MUTE_KEY, next ? '1' : '0');
-      if (next && audioRef.current) audioRef.current.pause();
-      return next;
-    });
   }, []);
 
   const showToast = useCallback((message) => {
@@ -122,7 +96,7 @@ export default function App() {
   }, []);
 
   if (!user) {
-    return <Login onLogin={handleLogin} onTestSound={playSfx} muted={muted} onToggleMute={toggleMute} />;
+    return <Login onLogin={handleLogin} />;
   }
 
   if (booting) {
@@ -135,8 +109,6 @@ export default function App() {
       route={route}
       navigate={navigate}
       onLogout={handleLogout}
-      muted={muted}
-      onToggleMute={toggleMute}
       onHome={() => navigate('home')}
     >
       {route.view === 'home' && (
@@ -148,10 +120,7 @@ export default function App() {
       {route.view === 'profile' && (
         <Profile
           user={user}
-          muted={muted}
-          onToggleMute={toggleMute}
           onLogout={handleLogout}
-          onPlaySfx={playSfx}
           showToast={showToast}
         />
       )}

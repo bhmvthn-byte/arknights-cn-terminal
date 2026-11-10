@@ -2195,6 +2195,9 @@ a {
   border: 1px solid var(--line);
   background: linear-gradient(165deg, #12181d, #0c1013);
 }
+.real-account {
+  grid-column: 1 / -1;
+}
 .id-card {
   background:
     radial-gradient(circle at 85% 10%, rgba(255, 176, 32, 0.1), transparent 55%),

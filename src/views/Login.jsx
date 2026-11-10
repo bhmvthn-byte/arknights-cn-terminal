@@ -4,7 +4,7 @@ import { Icon, LogoMark } from '../icons.jsx';
 const PHONE_RE = /^1[3-9]\d{9}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function Login({ onLogin, onTestSound, muted, onToggleMute }) {
+export default function Login({ onLogin }) {
   const [method, setMethod] = useState('phone');
   const [account, setAccount] = useState('');
   const [code, setCode] = useState('');
@@ -63,7 +63,6 @@ export default function Login({ onLogin, onTestSound, muted, onToggleMute }) {
       return;
     }
     setError('');
-    // iOS Safari 只在用户手势的调用栈内允许播放音频，因此在点击时同步登录并触发音效
     onLogin(method === 'phone' ? `${account.slice(0, 3)}****${account.slice(-4)}` : account);
   }
 
@@ -178,20 +177,6 @@ export default function Login({ onLogin, onTestSound, muted, onToggleMute }) {
           <button type="button" className="demo-fill" onClick={fillDemo}>
             填入演示账号
           </button>
-
-          <div className="sfx-row">
-            <button type="button" className={`icon-btn ${muted ? 'off' : ''}`} onClick={onToggleMute} title={muted ? '取消静音' : '静音'}>
-              <Icon name={muted ? 'mute' : 'volume'} size={17} />
-            </button>
-            <div className="sfx-meta">
-              <strong>登录音效 · Login</strong>
-              <span>DAN2008 / Freesound / CC0</span>
-            </div>
-            <button type="button" className="sfx-play" onClick={onTestSound} disabled={muted}>
-              <Icon name="play" size={15} />
-              试听
-            </button>
-          </div>
 
           <p className="login-disclaimer">
             本项目为非官方同人工具。真实鹰角账号登录需要官方 OAuth 与后端服务，当前版本不包含该能力。

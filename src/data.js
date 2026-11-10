@@ -4,7 +4,6 @@
 import bannerMe from './assets/banner-me.jpg';
 import bannerTa from './assets/banner-ta.jpg';
 import bannerSr from './assets/banner-sr.jpg';
-import loginSfx from './assets/login-boot.mp3';
 
 const op = (name, rarity, skill, note, role = 'dps') => ({ name, rarity, skill, note, role });
 
@@ -777,10 +776,4 @@ export const STATS = {
   squads: ALL_STAGES.length,
 };
 
-export const SFX = {
-  title: 'Login',
-  author: 'DAN2008',
-  license: 'CC0 1.0 公共领域',
-  source: 'https://freesound.org/people/DAN2008/sounds/640367/',
-  file: loginSfx,
-};
+
