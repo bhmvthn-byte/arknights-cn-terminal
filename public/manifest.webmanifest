@@ -1,0 +1,16 @@
+{
+  "name": "明日方舟 · 国服作战终端",
+  "short_name": "方舟终端",
+  "description": "明日方舟国服活动关卡推荐配队、干员替代与站位思路。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#080a0c",
+  "theme_color": "#0a0c0e",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
